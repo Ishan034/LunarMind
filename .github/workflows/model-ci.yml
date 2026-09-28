@@ -1,0 +1,30 @@
+name: LunarMind model checks
+
+on:
+  pull_request:
+    paths:
+      - "model/**"
+      - ".github/workflows/model-ci.yml"
+  push:
+    branches: [main]
+    paths:
+      - "model/**"
+      - ".github/workflows/model-ci.yml"
+
+jobs:
+  lint-and-build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: model
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: model/pyproject.toml
+      - run: python -m pip install --upgrade pip build
+      - run: python -m pip install -e ".[dev]"
+      - run: ruff check src
+      - run: python -m build
