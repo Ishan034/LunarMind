@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.pytest_cache/
+.ruff_cache/
+data/raw/**
+data/interim/**
+data/processed/**
+results/**
+!data/manifest.csv
+!results/.gitkeep
